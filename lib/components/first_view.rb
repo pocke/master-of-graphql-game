@@ -4,6 +4,7 @@ module Components
       o 'div' do
         o 'h1', 'Master of GraphQL'
         o 'p', 'Choose "GraphQL"'
+        o 'p', 'Note: "GraphiQL" is not "GraphQL"!'
         o 'button', { onclick: handle_click }, 'Start'
       end
     end

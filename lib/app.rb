@@ -18,7 +18,7 @@ module Game
 
     class MainComponent < Ovto::Component
       def render
-        o 'div' do
+        o 'div.container' do
           case state.page
           when :first_view
             o Components::FirstView

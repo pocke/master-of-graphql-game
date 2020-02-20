@@ -1,0 +1,17 @@
+body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.container {
+  max-width: 800px;
+}
+
+.words {
+  display: flex;
+  flex-wrap: wrap;
+
+  .word {
+    cursor: pointer;
+  }
+}

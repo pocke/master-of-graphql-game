@@ -4,11 +4,24 @@ module Components
       o 'div' do
         o 'h2', "Stage #{stage_count}"
 
-        words = ['GraphQL'] + ['GraphiQL'] * (words_count - 1)
-        words.shuffle.each do |word|
-          o 'span', { onclick: handle_click(word, next_stage: next_stage) }, word
+        o 'div.words' do
+          words = ['GraphQL'] + ['GraphiQL'] * (words_count - 1)
+          words.shuffle.each do |word|
+            o 'div.word', { onclick: handle_click(word, next_stage: next_stage), style: random_margin }, word
+          end
         end
       end
+    end
+
+    def random_margin
+      n = [*1..15]
+      m = -> { "#{n.sample}px" }
+      {
+        'margin-top': m.(),
+        'margin-bottom': m.(),
+        'margin-right': m.(),
+        'margin-left': m.(),
+      }
     end
 
     def handle_click(word, next_stage:)

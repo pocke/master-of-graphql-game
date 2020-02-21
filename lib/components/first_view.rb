@@ -4,7 +4,11 @@ module Components
       o 'div' do
         o 'h1', 'Master of GraphQL'
         o 'p', 'Choose "GraphQL"'
-        o 'p', 'Note: "GraphiQL" is not "GraphQL"!'
+        o 'p' do
+          o 'span',  'Note: "Graph'
+          o 'span.large-i',  'i'
+          o 'span',  'QL" is not "GraphQL"!'
+        end
         o 'button', { onclick: handle_start_game }, 'Start'
       end
     end

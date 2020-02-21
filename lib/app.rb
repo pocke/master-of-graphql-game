@@ -9,14 +9,14 @@ module Game
     class State < Ovto::State
       INITIAL_STATE = {
         page: :first_view,
-        nonce: 0,
+        wa_count: 0,
         start_time: nil,
         timer_id: nil,
         elapsed_time: 0,
       }
 
       item :page, default: INITIAL_STATE[:page]
-      item :nonce, default: INITIAL_STATE[:nonce]
+      item :wa_count, default: INITIAL_STATE[:wa_count]
       item :start_time, default: INITIAL_STATE[:start_time]
       item :timer_id, default: INITIAL_STATE[:timer_id]
       item :elapsed_time, default: INITIAL_STATE[:elapsed_time]
@@ -37,7 +37,7 @@ module Game
         o 'div.container' do
           if state.timer_id
             o 'div' do
-              o 'p', "time: %.1f" % state.elapsed_time
+              o 'p', "WA: %d, time: %.1f" % [state.wa_count, state.elapsed_time]
             end
           end
 
@@ -45,15 +45,15 @@ module Game
           when :first_view
             o Components::FirstView
           when :stage1
-            o Components::Stage, stage_count: 1, words_count: 2, next_stage: :stage2, nonce: state.nonce, timer_id: state.timer_id
+            o Components::Stage, stage_count: 1, words_count: 2, next_stage: :stage2, wa_count: state.wa_count, timer_id: state.timer_id
           when :stage2
-            o Components::Stage, stage_count: 2, words_count: 10, next_stage: :stage3, nonce: state.nonce, timer_id: state.timer_id
+            o Components::Stage, stage_count: 2, words_count: 10, next_stage: :stage3, wa_count: state.wa_count, timer_id: state.timer_id
           when :stage3
-            o Components::Stage, stage_count: 3, words_count: 30, next_stage: :stage4, nonce: state.nonce, timer_id: state.timer_id
+            o Components::Stage, stage_count: 3, words_count: 30, next_stage: :stage4, wa_count: state.wa_count, timer_id: state.timer_id
           when :stage4
-            o Components::Stage, stage_count: 4, words_count: 50, next_stage: :stage5, nonce: state.nonce, timer_id: state.timer_id
+            o Components::Stage, stage_count: 4, words_count: 50, next_stage: :stage5, wa_count: state.wa_count, timer_id: state.timer_id
           when :stage5
-            o Components::Stage, stage_count: 5, words_count: 100, next_stage: :game_clear, nonce: state.nonce, timer_id: state.timer_id, last: true
+            o Components::Stage, stage_count: 5, words_count: 100, next_stage: :game_clear, wa_count: state.wa_count, timer_id: state.timer_id, last: true
           when :game_clear
             o Components::GameClear
           else

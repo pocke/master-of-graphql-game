@@ -7,16 +7,28 @@ require 'components/game_clear'
 module Game
   class MainApp < Ovto::App
     class State < Ovto::State
-      item :page, default: :first_view
-      item :nonce, default: 0
-      item :start_time, default: nil
-      item :timer_id, default: nil
-      item :elapsed_time, default: 0
+      INITIAL_STATE = {
+        page: :first_view,
+        nonce: 0,
+        start_time: nil,
+        timer_id: nil,
+        elapsed_time: 0,
+      }
+
+      item :page, default: INITIAL_STATE[:page]
+      item :nonce, default: INITIAL_STATE[:nonce]
+      item :start_time, default: INITIAL_STATE[:start_time]
+      item :timer_id, default: INITIAL_STATE[:timer_id]
+      item :elapsed_time, default: INITIAL_STATE[:elapsed_time]
     end
 
     class Actions < Ovto::Actions
       def dispatch(state:)
         return state
+      end
+
+      def reset(state:)
+        return State::INITIAL_STATE
       end
     end
 

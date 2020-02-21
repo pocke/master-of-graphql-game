@@ -11,7 +11,7 @@ module Components
 
     def handle_click
       -> () do
-        actions.dispatch(state: { page: :first_view, start_time: nil, elapsed_time: nil })
+        actions.reset
       end
     end
   end

@@ -11,7 +11,10 @@ module Components
 
     def handle_start_game
       -> () do
-        actions.dispatch(state: { page: :stage1, start_time: Time.now })
+        timer_id = Native(`window`).setInterval( -> () {
+          actions.dispatch(state: { elapsed_time: Time.now - state.start_time })
+        }, 100)
+        actions.dispatch(state: { page: :stage1, start_time: Time.now, timer_id: timer_id })
       end
     end
   end

@@ -1,13 +1,13 @@
 module Components
-  class Stage < Ovto::Component
-    def render(stage_count:, words_count:, next_stage:, last: false)
+  class Stage < Ovto::PureComponent
+    def render(stage_count:, words_count:, next_stage:, last: false, nonce:, timer_id:)
       o 'div' do
         o 'h2', "Stage #{stage_count}"
 
         o 'div.words' do
           words = ['GraphQL'] + ['GraphiQL'] * (words_count - 1)
           words.shuffle.each do |word|
-            o 'div.word', { onclick: handle_click(word, next_stage: next_stage, last: last), style: random_margin }, word
+            o 'div.word', { onclick: handle_click(word, next_stage: next_stage, last: last, timer_id: timer_id), style: random_margin }, word
           end
         end
       end
@@ -24,19 +24,22 @@ module Components
       }
     end
 
-    def handle_click(word, next_stage:, last:)
+    def handle_click(word, next_stage:, last:, timer_id:)
       case word
       when 'GraphQL'
-        handle_click_correct(next_stage: next_stage, last: last)
+        handle_click_correct(next_stage: next_stage, last: last, timer_id: timer_id)
       else
         handle_click_wrong
       end
     end
 
-    def handle_click_correct(next_stage:, last:)
+    def handle_click_correct(next_stage:, last:, timer_id:)
       -> () do
         actions.dispatch(state: { page: next_stage })
-        actions.dispatch(state: { clear_time: Time.now }) if last
+        if last
+          Native(`window`).clearInterval(timer_id)
+          actions.dispatch(state: { timer_id: nil })
+        end
       end
     end
 

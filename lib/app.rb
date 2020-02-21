@@ -25,7 +25,7 @@ module Game
         o 'div.container' do
           if state.timer_id
             o 'div' do
-              o 'p', "time: #{state.elapsed_time}s"
+              o 'p', "time: %.1f" % state.elapsed_time
             end
           end
 

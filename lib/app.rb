@@ -8,6 +8,8 @@ module Game
     class State < Ovto::State
       item :page, default: :first_view
       item :nonce, default: 0
+      item :start_time, default: nil
+      item :clear_time, default: nil
     end
 
     class Actions < Ovto::Actions
@@ -31,7 +33,7 @@ module Game
           when :stage4
             o Components::Stage, stage_count: 4, words_count: 50, next_stage: :stage5
           when :stage5
-            o Components::Stage, stage_count: 5, words_count: 100, next_stage: :game_clear
+            o Components::Stage, stage_count: 5, words_count: 100, next_stage: :game_clear, last: true
           when :game_clear
             o Components::GameClear
           else
